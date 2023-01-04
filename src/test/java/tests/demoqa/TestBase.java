@@ -15,7 +15,8 @@ public class TestBase {
     static void setUp() {
         Configuration.baseUrl = "https://demoqa.com";
         Configuration.browserSize = "1500x600";
-        Configuration.holdBrowserOpen = true;
+        Configuration.holdBrowserOpen = false;
+        Configuration.timeout = 10000;
         Configuration.remote = "https://user1:1234@selenoid.autotests.cloud/wd/hub";
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
