@@ -1,5 +1,5 @@
 plugins {
-    id 'java-library'
+    id 'java'
     id 'io.qameta.allure' version '2.10.0'
 }
 
@@ -7,31 +7,29 @@ repositories {
     mavenCentral()
 }
 
+def allureVersion = "2.19.0",
+    slf4jVersion = "1.7.32"
+
 allure {
     report {
-        version.set("2.19.0")
+        version.set(allureVersion)
     }
     adapter { // отвечает за появление папочки build/allure-results
         aspectjWeaver.set(true) //обработка аннотации @Step
         frameworks {
             junit5 { //название фреймворка
-                adapterVersion.set("2.19.0") //версия интеграции фреймворка и Allure
+                adapterVersion.set(allureVersion) //версия интеграции фреймворка и Allure
             }
         }
     }
 }
 
-tasks.withType(JavaCompile) {
-    options.encoding = 'UTF-8'
-}
-
 dependencies {
-    testImplementation (
-            "com.github.javafaker:javafaker:1.0.2",
-            "com.codeborne:selenide:6.9.0",
-            "io.qameta.allure:allure-selenide:2.19.0",
-            "org.junit.jupiter:junit-jupiter:5.9.1",
-            "org.slf4j:slf4j-simple:1.7.32"
+    testImplementation(
+            "com.codeborne:selenide:6.7.2",
+            "io.qameta.allure:allure-selenide:$allureVersion",
+            "org.junit.jupiter:junit-jupiter:5.9.0",
+            "org.slf4j:slf4j-simple:$slf4jVersion"
     )
 }
 
@@ -46,22 +44,4 @@ tasks.withType(Test) {
     }
 }
 
-task smoke_tests(type: Test) {
-    useJUnitPlatform {
-        includeTags("smoke")
-    }
-}
-
-help {
-    doFirst {
-        println ""
-        println "************************************************************************ "
-        println "***                                                                  *** "
-        println "*** Welcome to https://github.com/qa-guru/demoqa-test-16!            *** "
-        println "***                                                                  *** "
-        println "*** ./gradlew help                                                   *** "
-        println "***                                                                  *** "
-        println "************************************************************************ "
-        println ""
-    }
-}
+test {}
